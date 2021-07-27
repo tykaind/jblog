@@ -13,6 +13,38 @@
 		]]>
 	</select>
 
+	<insert id="userInsert" parameterType="com.javaex.vo.UserVo">
+	<![CDATA[
+		insert into users
+		values(
+			seq_user_no.nextval, 
+			#{id}, 
+			#{password}, 
+			#{name}, 
+			#{gender}
+			 )
+	]]>
+	</insert>
 
+	<!-- 한 사람의 정보 가져오기(회원 수정용) -->
+		<select id="selectUpdate" parameterType="com.javaex.vo.UserVo" resultType="com.javaex.vo.UserVo">
+			<![CDATA[
+			SELECT no,id,password,name,gender
+			from users
+			where no=#{no}
+			]]>
+		</select>
 
+	<!-- 회원수정 하기 -->
+		<update id="userUpdate" parameterType="com.javaex.vo.UserVo">
+		<![CDATA[
+		update users
+		set password = #{password},
+		name = #{name},
+		gender = #{gender}
+		where no = #{no}
+		]]>
+		</update>
+		
+		
 </mapper>

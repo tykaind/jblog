@@ -60,9 +60,7 @@
 		<!-- //container -->
 		
 		
-		<div id="footer">
-			Copyright ⓒ 2021 박수현. All right reserved
-		</div>
+		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 		<!-- //footer -->
 
 	</div>

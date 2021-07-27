@@ -11,6 +11,11 @@ public class UserVo {
 	//생성자
 	public UserVo() {}
 	
+	public UserVo(int no) {
+		super();
+		this.no = no;
+	}
+
 	public UserVo(String id, String password) {
 		this.id = id;
 		this.password = password;
