@@ -73,7 +73,32 @@
 		]]>
 	</delete>
 
-
+	<select id="search" parameterType="map" resultType="BoardVo">
+		<![CDATA[
+				select 	b.no,
+		         	   	b.title,
+		         		b.content,
+		         		b.hit,
+		         		b.reg_date as regDate,
+		         		b.user_no as userNo,
+		         		u.name
+			    from board b, users u
+			    <where>
+			    u.no = b.user_no
+			    
+			    <if test="#{op} == title">
+	            and b.title LIKE %#{searchContent}%
+	            </if>
+	            
+	             <if test="#{op} == writerid">
+	            and u.name LIKE %#{searchContent}%
+	            </if>
+	            
+	            </where>
+			    order by no desc
+		
+		]]>
+	</select>
 
 
 

@@ -36,13 +36,20 @@
 
 				<div id="board">
 					<div id="list">
-						<form action="" method="">
+					
+						<form action="${pageContext.request.contextPath}/board/search" method="get">
 							<div class="form-group text-right">
-								<input type="text">
+								<select name="op">
+									<option value="title">제목</option>
+									<option value="writerid">작성자</option>
+								</select>
+								<input type="text" name="searchContent" value="">
 								<button type="submit" id=btn_search>검색</button>
 							</div>
 						</form>
+						
 						<table>
+						
 							<thead>
 								<tr>
 									<th>번호</th>

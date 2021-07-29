@@ -46,6 +46,15 @@ public class UserController {
 		}
 	}
 	
+	/*********** 로그아웃 ***********/
+	@RequestMapping("/user/logout")
+	public String logout(HttpSession session) {
+		
+		session.invalidate();
+		
+		return "redirect:/main";
+	}
+	
 	/********** 회원가입폼 **********/
 	@RequestMapping("/user/joinForm")
 	public String joinForm() {

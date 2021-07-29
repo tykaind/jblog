@@ -86,6 +86,17 @@ public class BoardController {
 			return "redirect:/board/list";
 		}
 		
+		//검색기능
+		@RequestMapping("/board/search")
+		public String search(@RequestParam("op") String op,@RequestParam("searchContent") String searchContent, Model model) {
+			System.out.println("[보더컨트롤러.검색기능]");
+			
+			List<BoardVo> boardsearch = boardService.search(op,searchContent);
+			
+			model.addAttribute("boardsearch", boardsearch);
+			return "board/list";
+		}
+		
 		
 		
 		

@@ -63,5 +63,15 @@ public class BoardService {
 	
 		return count;
 	}
+	
+	//검색기능
+	
+	public List<BoardVo> search(String op,String searchContent) {
+		System.out.println("[보더서비스.검색기능]");
+		
+		List<BoardVo> boardsearch = boardDao.search(op, searchContent);
+		
+		return boardsearch;
+	}
 
 }
