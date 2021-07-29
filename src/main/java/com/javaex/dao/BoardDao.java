@@ -30,13 +30,11 @@ public class BoardDao {
 		return sqlSession.selectOne("board.selectBoard", no);
 	}
 
-	// 리스트전체 불러오기
-	public List<BoardVo> getboardList() {
-		System.out.println("[보더다오.겟보더리스트]");
+	// 리스트 출력(검색)
+	public List<BoardVo> getboardList(Map<String, Object> searchMap) {
+		System.out.println("[보더다오.검색기능]");
 
-		List<BoardVo> boardList = sqlSession.selectList("board.boardList");
-
-		return boardList;
+		return sqlSession.selectList("board.search", searchMap);
 	}
 
 	// 보더수정
@@ -63,20 +61,6 @@ public class BoardDao {
 		int count = sqlSession.delete("board.boardDelete", no);
 
 		return count;
-	}
-
-	// 검색기능
-	public List<BoardVo> search(String op, String searchContent) {
-		System.out.println("[보더다오.검색기능]");
-
-		
-		 Map<String, Object> searchMap = new HashMap<String, Object>();
-		 searchMap.put("op", op); 
-		 searchMap.put("searchContent", searchContent);
-		 
-		 List<BoardVo> boardsearch = sqlSession.selectList("board.search", searchMap);
-
-		return boardsearch;
 	}
 
 }

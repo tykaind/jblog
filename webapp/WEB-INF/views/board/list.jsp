@@ -37,7 +37,7 @@
 				<div id="board">
 					<div id="list">
 					
-						<form action="${pageContext.request.contextPath}/board/search" method="get">
+						<form action="${pageContext.request.contextPath}/board/list" method="get">
 							<div class="form-group text-right">
 								<select name="op">
 									<option value="title">제목</option>
