@@ -39,7 +39,21 @@
 		where no = #{no}
 	]]>
 </delete>
-	
+
+
+<select id="selectOne" parameterType="int" resultType="galleryVo">
+		<![CDATA[
+		select no,
+       		user_no userNo,
+       		content,
+       		filePath,
+       		orgName,
+       		saveName,
+       		fileSize
+		from gallery
+		where no=#{no}
+		]]>
+	</select>
 	
 
 </mapper>

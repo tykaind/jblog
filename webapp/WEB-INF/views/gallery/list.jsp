@@ -145,7 +145,6 @@
 					<h4 class="modal-title">이미지보기</h4>
 				</div>
 				<div class="modal-body">
-
 					<div class="formgroup">
 						<img id="viewModelImg" src="">
 						<!-- ajax로 처리 : 이미지출력 위치-->
@@ -160,8 +159,8 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal" id="gg">닫기</button>
 
-						<button type="button" class="btn btn-danger" id="btnDel">삭제</button>
-						
+								<button type="button" class="btn btn-danger" id="btnDel">삭제</button>
+
 						<input type="hidden" id="gno" value="">
 
 					</div>
@@ -212,6 +211,28 @@
 		
 		var no = $(this).data("no");
 		$("#gno").val(no);
+		
+		//서버에 삭제요청(no 전달)
+		$.ajax({
+			url : "${pageContext.request.contextPath }/gallery/selectOne" ,
+			type : "post",
+			//contentType : "application/json",
+			data : {no: no},
+			
+			dataType : "json",
+			success : function(galleryVo){
+				if(galleryVo.userNo == ${authUser.no}){
+					console.log("맞다");
+					$("#btnDel").show();
+				}else{
+					console.log("아니다");
+					$("#btnDel").hide();
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
 			
 
 	});

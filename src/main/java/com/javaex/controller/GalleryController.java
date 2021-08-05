@@ -47,6 +47,14 @@ public class GalleryController {
 		
 		return count;
 	}
+	@ResponseBody
+	@RequestMapping("/gallery/selectOne")
+	public GalleryVo selectOne(@RequestParam("no") int no,Model model) {
 	
+		GalleryVo galleryVo = galleryService.selectOne(no);
+		model.addAttribute(galleryVo);
+		System.out.println(galleryVo);
+	return galleryVo;
+	}
 	
 }

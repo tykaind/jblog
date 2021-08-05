@@ -84,6 +84,11 @@ public class GalleryService {
 		return count;
 	}
 	
+	public GalleryVo selectOne(int no) {
+		
+		return galleryDao.selectOne(no);
+	}
+	
 	
 	
 }

@@ -37,4 +37,9 @@ public class GalleryDao {
 		return count;
 	}
 	
+	public GalleryVo selectOne(int no) {
+		
+		return sqlSession.selectOne("gallery.selectOne", no);
+	}
+	
 }
