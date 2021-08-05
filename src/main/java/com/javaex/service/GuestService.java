@@ -28,10 +28,10 @@ public class GuestService {
 	}
 
 	/**** 방명록 삭제 ****/
-	public void delete(GuestbookVo guestbookVo) {
+	public int delete(GuestbookVo guestbookVo) {
 
-		guestbookDao.delete(guestbookVo);
-
+		int count = guestbookDao.delete(guestbookVo);
+		return count;
 	}
 	
 	/**** 방명록저장,게시글가져오기 ****/

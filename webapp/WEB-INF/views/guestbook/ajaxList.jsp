@@ -6,12 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<link href="${pageContext.request.contextPath }/assets/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath }/assets/css/mysite.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath }/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script>
-
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/bootstrap/js/bootstrap.js"></script>
 
 </head>
 
@@ -92,6 +92,39 @@
 	</div>
 	<!-- //wrap -->
 
+
+
+
+<!-- --------------------모달창------------------ -->
+<!-- --------------------모달창------------------ -->
+<div id="delModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">방명록 삭제</h4>
+      </div>
+      <div class="modal-body">
+        
+      <label for="modalPassword">비밀번호</label>
+	  <input id="modalPassword" type="password" name="password" value="">
+	  <input type="text" name="no" value="">
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+        <button id="modalBtnDel" type="button" class="btn btn-primary">삭제</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+   <!-- 
+<!-- --------------------모달창------------------ -->
+<!-- --------------------모달창------------------ -->
+
+
+
 </body>
 
 <script type="text/javascript">
@@ -107,7 +140,7 @@ $(document).ready(function(){
 		//contentType : "application/json",
 		//data : {name: ”홍길동"},
  
-		//dataType : "json",
+		dataType : "json",
 		success : function(guestList){
 			/*성공시 처리해야될 코드 작성*/
 			console.log(guestList);
@@ -159,11 +192,16 @@ $("#btnSubmit").on("click", function(){
 		//data : {name: userName, password: password, content: content},
 		data : guestbookVo,
 		
-		//dataType : "json",
+		dataType : "json",
 		success : function(guestbookVo){
 			/*성공시 처리해야될 코드 작성*/
 			console.log(guestbookVo);
 			render(guestbookVo, "up");
+			
+			//입력폼초기화
+			$("#input-uname").val("");
+			$("#input-pass").val("");
+			$("[name=content]").val("");
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
@@ -171,10 +209,69 @@ $("#btnSubmit").on("click", function(){
 	});
 	
 });
+
+// 리스트에 삭제 버튼을 클릭할때
+$("#listArea").on("click", ".btnDel", function(){
+	console.log("삭제버튼 클릭");
+
+	//hidden no 입력하기
+	var no = $(this).data("no");
+	$("[name=no]").val(no);
+	
+	//비밀번호 창 초기화
+	$("#modalPassword").val("");
+	
+	//모달창 보이기
+	$("#delModal").modal();
+});
+
+//모달창 삭제 버튼을 클릭할때
+$("#modalBtnDel").on("click", function(){
+	console.log("모달창삭제버튼 클릭");
+	
+	var no = $("[name='no']").val();
+	
+	//모달창에서 받은 값을 묶어준다.
+	var guestbookVo = {
+			no:$("[name='no']").val(),
+			password: $("[name='password']").val()
+	};
+	
+	//서버에 삭제요청(no, password 전달)
+	$.ajax({
+		url : "${pageContext.request.contextPath }/api/guestbook/remove" ,
+		type : "post",
+		//contentType : "application/json",
+		data : guestbookVo,
+		
+		dataType : "json",
+		success : function(count){
+			/*성공시 처리해야될 코드 작성*/
+			
+			if(count === 1){
+				//모달창 닫기
+				$("#delModal").modal("hide");
+				//리스트에 삭제버튼이 있던 테이블 화면에서 지운다.
+				$("#t-"+no).remove();
+			}else{
+				$("#delModal").modal("hide");
+			}
+			
+			
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+});
+
+//리스트가져오기
+
+
 //방명록 1개씩 랜더링
 function render(guestbookVo, type){
 	var str = "";
-	str += '<table class="guestRead">';
+	str += '<table id="t-'+ guestbookVo.no +'" class="guestRead">';
 	str += '	<colgroup>';
 	str += '		<col style="width: 10%;">';
 	str += '		<col style="width: 40%;">';
@@ -185,7 +282,7 @@ function render(guestbookVo, type){
 	str += '		<td>'+ guestbookVo.no + '</td>';
 	str += '		<td>'+ guestbookVo.name + '</td>';
 	str += '		<td>'+ guestbookVo.reg_date + '</td>';
-	str += '		<td><a href="">[삭제]</a></td>';
+	str += '		<td><button class="btnDel" data-no="'+ guestbookVo.no + '">[삭제]</button></td>';
 	str += '	</tr>';
 	str += '	<tr>';
 	str += '		<td colspan=4 class="text-left">'+ guestbookVo.content + '</td>';

@@ -12,6 +12,7 @@ import com.javaex.service.GuestService;
 import com.javaex.vo.GuestbookVo;
 
 @Controller
+@RequestMapping(value="/api/guestbook/")
 public class ApiGuestbookController {
 
 	@Autowired
@@ -19,7 +20,7 @@ public class ApiGuestbookController {
 	
 	//ajax 리스트 가져오기
 	@ResponseBody
-	@RequestMapping(value= "/api/guestbook/list")
+	@RequestMapping(value= "list")
 	public List<GuestbookVo> List() {
 		System.out.println("에이작스컨트롤러-리스트");
 		
@@ -31,14 +32,24 @@ public class ApiGuestbookController {
 	
 	//ajax 방명록 저장
 	@ResponseBody
-	@RequestMapping(value= "/api/guestbook/write")
+	@RequestMapping(value= "write")
 	public GuestbookVo write(@ModelAttribute GuestbookVo guestbookVo) {
-		System.out.println("에아즉스컨트롤러-등록");
+		System.out.println("에아작스컨트롤러-등록");
 		
 		GuestbookVo resultVo = guestService.writeResultVo(guestbookVo);
 		return resultVo;
 	}
 	
+	//ajax 방명록 삭제
+	@ResponseBody
+	@RequestMapping(value= "remove")
+	public int remove(@ModelAttribute GuestbookVo guestbookVo) {
+		System.out.println("에아작스컨트롤러-삭제");
+		
+		int count = guestService.delete(guestbookVo);
+		
+		return count;
+	}
 	
 	
 	
