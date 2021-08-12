@@ -5,67 +5,40 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>수현이의 페이지</title>
-<link href="${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath}/assets/css/main.css" rel="stylesheet" type="text/css">
+<title>JBlog</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
 
 </head>
-
 <body>
-	<div id="wrap">
-
-		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
-
+	<div id="center-content">
 		
-		<div id="container" class="clearfix">
-			<!-- aside 없음 -->
-			<div id="full-content">
+		<!--메인 해더 자리 -->
+		<c:import url="/WEB-INF/views/includes/main-header.jsp"></c:import>
+		
+		<form id="search-form">
+			<fieldset>
+				<input type="text" name="keyword" >
+				<button id="btnSearch" type="submit" >검색</button>
+			</fieldset>
 			
-				<!-- content-head 없음 -->
-				<div id="index"> 
+			<fieldset>
+				<label for="rdo-title">블로그 제목</label> 
+				<input id="rdo-title" type="radio" name="kwdOpt" value="optTitle" > 
 				
-					<img id="profile-img" src="${pageContext.request.contextPath}/assets/image/dame.jpg">
-					
-					<div id="greetings">
-						<p class="text-xlarge">
-							<span class="bold">안녕하세요!!<br>
-							수현이에 MySite에 오신 것을 환영합니다.<br>
-							<br>
-							이 사이트는 웹 프로그램밍 실습과제 예제 사이트입니다.<br>
-							</span>
-							<br>
-							사이트 소개, 회원가입, 방명록, 게시판으로 구성되어 있으며<br>
-							jsp&serlvet(모델2) 방식으로 제작되었습니다.<br>
-							<br>
-							자바 수업 + 데이터베이스 수업 + 웹프로그래밍 수업<br>
-							배운 거 있는거 없는 거 다 합쳐서 만들어 놓은 사이트 입니다.<br>
-							<br>
-							(자유롭게 꾸며보세요!!)<br>
-							<br><br>
-							<a class="" href="">[방명록에 글 남기기]</a>
-						</p>	
-					</div>
-					<!-- //greetings -->
-					
-					<div class="clear"></div>
-					
-				</div>
-				<!-- //index -->
-				
-			</div>
-			<!-- //full-content -->
+				<label for="rdo-userName">블로거 이름</label> 
+				<input id="rdo-userName" type="radio" name="kwdOpt" value="optName" > 
+			</fieldset>
+		</form>
+		
+		<div id="resultList">
 			
-
+			
 		</div>
-		<!-- //container -->
 		
-		
-		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
-		<!-- //footer -->
-
+		<!-- 메인 푸터  자리-->
+		<c:import url="/WEB-INF/views/includes/main-footer.jsp"></c:import>
+	
 	</div>
-	<!-- //wrap -->
-
+	<!-- //center-content -->
 </body>
-
 </html>

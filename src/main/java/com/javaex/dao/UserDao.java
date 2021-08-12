@@ -1,5 +1,7 @@
 package com.javaex.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,41 +14,32 @@ public class UserDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	//회원정보 1명가져오기 로그인활용
-	public UserVo selectUser(UserVo userVo) {
-		System.out.println("[UserDao.selectUser()]");
-	
-		UserVo authUser = sqlSession.selectOne("user.selectUser", userVo);
-		return authUser;
+	/***** 회원가입 등록 *****/
+	public int join(UserVo userVo) {
+		System.out.println("Dao-조인");
+		System.out.println(userVo);
+
+	  return sqlSession.insert("user.join", userVo);
 	}
+	/***** 블로그생성 *****/
+	public int joinBlog(Map<String, Object> blogMap) {
 	
-	//회원가입
-	public int userjoin(UserVo userVo) {
-		System.out.println("[UserDao.userjoin()]");
-		
-		int count = sqlSession.insert("user.userInsert", userVo);
-		
-		return count;
-	}
-	
-	//수정폼 값넘겨받기
-	public UserVo selectUpdate(UserVo userVo) {
-		System.out.println("[UserDao.selectUpdate()]");
-		
-		UserVo selectUpdate = sqlSession.selectOne("user.selectUpdate", userVo);
-		
-		
-		return selectUpdate;
-	}
-	
-	//수정하기
-	public int userUpdate(UserVo userVo) {
-		System.out.println("[UserDao.userUpdate()]");
-		
-		int count = sqlSession.update("user.userUpdate", userVo);
-		
-		return count;
+	return sqlSession.insert("blog.blogMap", blogMap); 
 	}
 	
 	
+	/***** 아이디중복체크 *****/
+	public String idCheck(String id) {
+		System.out.println("Dao-아이디중복체크");
+		return sqlSession.selectOne("user.idCheck",id);
+	}
+	
+	/***** 로그인 *****/
+	public UserVo login(UserVo userVo) {
+		System.out.println("Dao-로그인");
+		UserVo dd = sqlSession.selectOne("user.login", userVo);
+		
+		System.out.println("방금방꺼내온: "+dd);
+		return dd;
+	}
 }

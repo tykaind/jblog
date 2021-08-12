@@ -5,83 +5,54 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link href="${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath}/assets/css/user.css" rel="stylesheet" type="text/css">
-
+<title>JBlog</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script>
 </head>
 <body>
-	<div id="wrap">
-
-		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
-
-		<div id="container" class="clearfix">
-			<div id="aside">
-				<h2>회원</h2>
-				<ul>
-					<li>회원정보</li>
-					<li>로그인</li>
-					<li>회원가입</li>
-				</ul>
-			</div>
-			<!-- //aside -->
-
-			<div id="content">
-			
-				<div id="content-head">
-					<h3>로그인</h3>
-					<div id="location">
-						<ul>
-							<li>홈</li>
-							<li>회원</li>
-							<li class="last">로그인</li>
-						</ul>
-					</div>
-					<div class="clear"></div>
+	<div id="center-content">
+		
+		
+		<!-- 메인 해더 -->
+		<c:import url="/WEB-INF/views/includes/main-header.jsp"></c:import>
+		
+		<div id="loginForm">
+			<form method="post" action="${pageContext.request.contextPath }/user/login">
+	      		<table>
+			      	<colgroup>
+						<col style="width: 100px;">
+						<col style="">
+					</colgroup>
+		      		<tr>
+		      			<td><label for="textId">아이디</label></td>
+		      			<td><input id="textId" type="text" name="id" value=""></td>
+		      		</tr>
+		      		<tr>
+		      			<td><label for="textPassword">패스워드</label> </td>
+		      			<td><input id="textPassword" type="password" name="password" value=""></td>   
+		      			   			
+		      		</tr> 
+		      		<tr>
+		      			<td colspan="2" id="tdMsg" colspan="2">
+		      				<c:if test="${param.result=='fail'}">
+		      					<span>아이디 또는 비밀번호를 확인해 주세요.</span>
+		      				</c:if>
+		      			</td>
+		      		</tr> 
+		      	</table>
+	      		<div id="btnArea">
+					<button id="loginbtn" class="btn" type="submit">로그인</button>
 				</div>
-				 <!-- //content-head -->
-	
-				<div id="user">
-					<div id="loginForm">
-						<form action="${pageContext.request.contextPath}/user/login" method="get">
-	
-							<!-- 아이디 -->
-							<div class="form-group">
-								<label class="form-text" for="input-uid">아이디</label> 
-								<input type="text" id="input-uid" name="id" value="" placeholder="아이디를 입력하세요">
-							</div>
-	
-							<!-- 비밀번호 -->
-							<div class="form-group">
-								<label class="form-text" for="input-pass">비밀번호</label> 
-								<input type="text" id="input-pass" name="password" value="" placeholder="비밀번호를 입력하세요"	>
-							</div>
-							<c:if test="${param.result eq 'fail'}">
-							<p>로그인에 실패 하였습니다.</p>
-							</c:if>
-							
-							<!-- 버튼영역 -->
-							<div class="button-area">
-								<button type="submit" id="btn-submit">로그인</button>
-							</div>
-							
-						</form>
-					</div>
-					<!-- //loginForm -->
-				</div>
-				<!-- //user -->
-			</div>
-			<!-- //content  -->
-			
+	      		
+			</form>
+		
 		</div>
-		<!-- //container  -->
-
-		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
-		<!-- //footer -->
-
+		
+		<!-- 메인 푸터  자리-->
+		<c:import url="/WEB-INF/views/includes/main-footer.jsp"></c:import>
+		
 	</div>
-	<!-- //wrap -->
-
+	
 </body>
 
 </html>

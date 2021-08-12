@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 
 	
-	@RequestMapping("/main")
-	public String main() {
-		System.out.println("[MainController.main()]");
+	/***** 메인페이지 이동 *****/
+	@RequestMapping("/main/index")
+	public String mainIndex() {
+		System.out.println("controller-메인인덱스");
+		
 		return "main/index";
 	}
 }

@@ -4,41 +4,74 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.javaex.service.UserService;
 import com.javaex.vo.UserVo;
 
 @Controller
 public class UserController {
-
+	
 	@Autowired
-	private UserService userService;
+	UserService userService;
+	
+	/***** 회원가입 폼 *****/
+	@RequestMapping("/user/joinForm")
+	public String joinForm() {
+		System.out.println("controller-회원가입폼");
+		
+		return "user/joinForm";
+	}
+	
+	/****** 로그아웃 ******/
+	@RequestMapping("/user/logout")
+	public String logout(HttpSession session) {
+		
+		session.invalidate();
+		
+		return "redirect:/main/index";
+	}
 	
 	
-	/************ 로그인폼 ************/
+	/***** 회원가입 등록 & 블로그생성*****/
+	@RequestMapping("/user/join")
+	public String join(@ModelAttribute UserVo userVo) {
+		System.out.println("controller-조인");
+		
+		userService.join(userVo);
+		return "user/joinSuccess";
+	}
+	
+	/***** 아이디중복체크 *****/
+	@ResponseBody
+	@RequestMapping("/user/idCheck")
+	public boolean idCheck(@RequestParam("id")String id) {
+		boolean state = userService.idCheck(id);
+		return state;
+	}
+	
+	/***** 로그인폼 *****/
 	@RequestMapping("/user/loginForm")
 	public String loginForm() {
-		System.out.println("[UserController.loginForm()]");
+		System.out.println("controller-로그인폼");
 		
 		return "user/loginForm";
 	}
 	
-	/************* 로그인 *************/
+	/***** 로그인 *****/
 	@RequestMapping("/user/login")
-	public String login(@ModelAttribute UserVo userVo, HttpSession session) {
-		System.out.println("[UserController.login()]");
+	public String login(@ModelAttribute UserVo userVo,HttpSession session) {
+		System.out.println("controller-로그인");
+		UserVo authUser = userService.login(userVo);
 
-		UserVo authUser = userService.getUser(userVo);
-		
 		if(authUser != null) {
 			System.out.println("[로그인성공]");
-
 			session.setAttribute("authUser", authUser);
 
-			return "redirect:/main";
+			return "redirect:/main/index";
 		}else {
 			System.out.println("[로그인실패]");
 			
@@ -46,48 +79,4 @@ public class UserController {
 		}
 	}
 	
-	/*********** 로그아웃 ***********/
-	@RequestMapping("/user/logout")
-	public String logout(HttpSession session) {
-		
-		session.invalidate();
-		
-		return "redirect:/main";
-	}
-	
-	/********** 회원가입폼 **********/
-	@RequestMapping("/user/joinForm")
-	public String joinForm() {
-		System.out.println("[UserController.joinForm()]");
-		
-		return "user/joinForm";
-	}
-	
-	/*********** 회원가입 ***********/
-	@RequestMapping("/user/join")
-	public String join(@ModelAttribute UserVo userVo) {
-		System.out.println("[UserController.join()]");
-		System.out.println(userVo);
-		userService.userjoin(userVo);
-		
-		return "user/joinOk";
-	}
-	/*********** 수정폼 ***********/
-	@RequestMapping("/user/selectUpdate")
-	public String selectUpdate(@ModelAttribute UserVo userVo ,Model model) {
-		System.out.println("[UserController.userUpdateForm()]");
-		
-		UserVo selectUpdate = userService.selectUpdate(userVo);
-		model.addAttribute("selectUpdate", selectUpdate);
-		return "user/modifyForm";
-	}
-	
-	/************ 수정 ************/
-	@RequestMapping("/user/userUpdate")
-	public String userUpdate(@ModelAttribute UserVo userVo, HttpSession session) {
-		System.out.println("[UserController.userUpdate()]");
-		
-		userService.userUpdate(userVo);
-		return "redirect:/main";
-	}
 }

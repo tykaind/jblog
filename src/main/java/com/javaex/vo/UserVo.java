@@ -1,41 +1,46 @@
 package com.javaex.vo;
 
 public class UserVo {
-	//필드
-	private int no;
+
+	private int userNo;
 	private String id;
 	private String password;
-	private String name;
-	private String gender;
+	private String userName;
+	private String joinDate;
 	
-	//생성자
+	
+	
 	public UserVo() {}
 	
-	public UserVo(int no) {
-		super();
-		this.no = no;
-	}
-
 	public UserVo(String id, String password) {
 		this.id = id;
 		this.password = password;
 	}
-	
-	public UserVo(int no, String id, String password, String name, String gender) {
-		super();
-		this.no = no;
+
+	public UserVo(String id, String password, String userName) {
 		this.id = id;
 		this.password = password;
-		this.name = name;
-		this.gender = gender;
-	}
-	// GET/SET
-	public int getNo() {
-		return no;
+		this.userName = userName;
 	}
 
-	public void setNo(int no) {
-		this.no = no;
+	public UserVo(int userNo, String id, String password, String userName, String joinDate) {
+		this.userNo = userNo;
+		this.id = id;
+		this.password = password;
+		this.userName = userName;
+		this.joinDate = joinDate;
+	}
+
+	
+	
+	
+	
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
 	}
 
 	public String getId() {
@@ -54,32 +59,28 @@ public class UserVo {
 		this.password = password;
 	}
 
-	public String getName() {
-		return name;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public String getGender() {
-		return gender;
+	public String getJoinDate() {
+		return joinDate;
 	}
 
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setJoinDate(String joinDate) {
+		this.joinDate = joinDate;
 	}
+
 	
-	//메소드 일반
+	
+	
 	@Override
 	public String toString() {
-		return "UserVo [no=" + no + ", id=" + id + ", password=" + password + ", name=" + name + ", gender=" + gender
-				+ "]";
+		return "userVo [userNo=" + userNo + ", id=" + id + ", password=" + password + ", userName=" + userName
+				+ ", joinDate=" + joinDate + "]";
 	}
-	
-	
-	
-	
-	
-	
 }
