@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="post">
+	<!-- 포스트 카테고리정보 -->
+	<select id="writeForm" parameterType="String" resultType="PostVo">
+		<![CDATA[
+			select  cateName, cateNo
+			from category
+			where id = #{id}
+			order by regDate desc
+		]]>
+	</select>
+	
+	<!-- 등록 -->
+	<insert id="writeinsert" parameterType="PostVo">
+		<![CDATA[
+			insert into post
+			values(
+			    SEQ_POST_NO.nextval,
+			    #{cateNo},
+			    #{postTitle},
+			    #{postContent},
+			    sysdate
+			)
+		]]>
+	</insert>
+
+</mapper>

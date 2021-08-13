@@ -1,19 +1,12 @@
 package com.javaex.service;
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.CategoryDao;
-import com.javaex.vo.BlogVo;
+import com.javaex.vo.CategoryVo;
 
 @Service
 public class CategoryService {
@@ -21,55 +14,34 @@ public class CategoryService {
 	
 	@Autowired
 	CategoryDao categoryDao;
+
 	
-	public int logoJoin(String id, String blogTitle, MultipartFile file) {
-		System.out.println("카테고리서비스-로고조인");
-		String saveDir = "C:\\javaStudy\\upload\\";
-		String orgfileName = file.getOriginalFilename();
-		String filePath = saveDir + orgfileName;
+	public List<CategoryVo> categoryForm(String id) {
+		System.out.println("카테고리서비스-폼정보불러오기");
 		
-
-		try {
-			byte[] fileData = file.getBytes();
-			OutputStream out = new FileOutputStream(filePath);
-			BufferedOutputStream bout = new BufferedOutputStream(out);
-
-			bout.write(fileData);
-			bout.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Map<String, Object> logoMap = new HashMap<String, Object>();
-		logoMap.put("id", id); 
-		logoMap.put("blogTitle", blogTitle); 
-		logoMap.put("file", orgfileName);
+		List<CategoryVo> categoryList =  categoryDao.categoryForm(id);
 		
-		categoryDao.logoJoin(logoMap);
-		return 1;
+		return categoryList;
 	}
 	
 	
-	
-	
-	public int logoJoinrecyle(String id, String blogTitle, String logoName) {
-		System.out.println("카테고리서비스-로고조인재사용");
+	/*카테고리저장 키값가져오기*/
+	public CategoryVo categoryInsert(CategoryVo categoryVo) {
+		System.out.println("카테고리서비스-등록");
 		
-		Map<String, Object> logoMap = new HashMap<String, Object>();
-		logoMap.put("id", id); 
-		logoMap.put("blogTitle", blogTitle); 
-		logoMap.put("file", logoName);
+		categoryDao.categoryInsert(categoryVo);
 		
-		categoryDao.logoJoin(logoMap);
-		return 1;
+		int cateNo = categoryVo.getCateNo();
+		System.out.println("값좀넘어와라!: "+cateNo);
+		CategoryVo addcate = categoryDao.selectCate(cateNo);
+		
+		return addcate;
 	}
 	
-	
-	
-	
-	public BlogVo logorecycle(@RequestParam("id") String id) {
-		System.out.println("카테고리서비스-로고재사용");
+	public int catedelect(int cateNo) {
 		
-		return categoryDao.logorecycle(id);
+		int count = categoryDao.catedelect(cateNo);
+
+		return count;
 	}
 }

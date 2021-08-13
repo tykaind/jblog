@@ -21,10 +21,16 @@ public class UserDao {
 
 	  return sqlSession.insert("user.join", userVo);
 	}
-	/***** 블로그생성 *****/
+	/***** 블로그 생성 *****/
 	public int joinBlog(Map<String, Object> blogMap) {
 	
 	return sqlSession.insert("blog.blogMap", blogMap); 
+	}
+	
+	/***** 기본카테고리 생성 *****/
+	public int basiccategory(Map<String, Object> blogcategory) {
+	
+	return sqlSession.insert("category.basiccategory", blogcategory); 
 	}
 	
 	

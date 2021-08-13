@@ -28,6 +28,13 @@ public class UserService {
 	 
 		userDao.joinBlog(blogMap);
 		
+		Map<String, Object> blogcategory = new HashMap<String, Object>();
+		blogcategory.put("id", userVo.getId());
+		blogcategory.put("cateName", "미분류");
+		blogcategory.put("description", "가입 할시 생기는 기본 카테고리입니다.");
+		
+		userDao.basiccategory(blogcategory);
+		
 		return count;
 	}
 	

@@ -23,5 +23,24 @@
 			where b.id = #{id}
 			]]>
 	</select>
+	
+	<!-- 로고,블로그타이틀 수정 -->
+	<update id="logo" parameterType="map">
+		<![CDATA[
+			update blog
+			set blogTitle = #{blogTitle},
+			logoFile = #{file}
+			where id = #{id}
+		]]>
+	</update>
+	
+	<!-- 로고수정안할시 기존로고 이름 가져오기 -->
+	<select id="logorecycle" parameterType="String" resultType="BlogVo">
+		<![CDATA[
+		    select id,blogTitle,logofile
+			from blog
+			where id = #{id}
+		]]>
+	</select>
 
 </mapper>

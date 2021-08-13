@@ -3,22 +3,65 @@
 
 <mapper namespace="category">
 
-	<update id="logo" parameterType="map">
+	<!-- 회원가입시 자동으로 들어가는 기본카테고리 -->
+	<insert id="basiccategory" parameterType="map">
 		<![CDATA[
-			update blog
-			set blogTitle = #{blogTitle},
-			logoFile = #{file}
-			where id = #{id}
-		]]>
-	</update>
-	
-	<select id="logorecycle" parameterType="String" resultType="BlogVo">
+			insert into category values (seq_category_no.nextval,
+		                                       #{id},
+		                                       #{cateName},
+		                                       #{description},
+		                                       SYSDATE
+		                                       )
+    	]]>
+	</insert>
+
+	<select id="categoryForm" parameterType="String" resultType="CategoryVo">
 		<![CDATA[
-		    select id,blogTitle,logofile
-			from blog
-			where id = #{id}
+			select  c.cateNo,
+			        c.cateName,
+			        (select  count(case when p.cateNo = c.cateNo then 1 end)
+			        from post p) cateP,
+			        c.description,
+			        c.regDate
+			from category c, blog b
+			where c.id = b.id
+			and c.id = #{id}
+			order by c.regDate desc
 		]]>
 	</select>
 
+	<select id="selectCategory" parameterType="int" resultType="CategoryVo">
+		<![CDATA[
+			select cateNo,id,catename,description
+			from category
+			where cateNo = #{cateNo}
+		]]>
+	</select>
+	
+	<insert id="addcategory" parameterType="CategoryVo">
+			<selectKey keyProperty="cateNo" resultType="int" order="BEFORE">
+				<![CDATA[
+				select seq_category_no.NEXTVAL from dual
+				]]>
+			</selectKey>
+		<![CDATA[
+			insert into category values (	   #{cateNo},
+		                                       #{id},
+		                                       #{cateName},
+		                                       #{description},
+		                                       SYSDATE
+		                                       )
+    	]]>
+	</insert>
+
+	<delete id="catedelect" parameterType="int">
+		<![CDATA[
+			DELETE FROM (select  c.cateNo,
+			            	(select  count(case when p.cateNo = c.cateNo then 1 end) from post p) cateP
+			            from category c) deleteT
+			WHERE cateNo = #{cateNo}
+			and cateP = 0
+		]]>
+	</delete>
 
 </mapper>

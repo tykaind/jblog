@@ -18,14 +18,14 @@
 
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
-				<li class="tabbtn selected"><a href="">기본설정</a></li>
-				<li class="tabbtn"><a href="">카테고리</a></li>
-				<li class="tabbtn"><a href="">글작성</a></li>
+				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">기본설정</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/cate">카테고리</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/writeForm">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
 			
 			<div id="admin-content">
-				<form action="" method="">
+				<form action="${pageContext.request.contextPath}/${authUser.id}/admin/writeinsert" method="post">
 			      	<table id="admin-write">
 			      		<colgroup>
 							<col style="width: 100px;">
@@ -39,10 +39,9 @@
 				      		</td>
 				      		<td>
 				      			<select name="cateNo">
-				      				<!-- 카테고리 리스트 영역 -->
-				      				<option value="">자바프로그래밍</option>
-				      				<option value="">오라클</option>
-				      				<!-- 카테고리 리스트 영역 -->
+				      				<c:forEach items="${postList}" var="pList">
+				      					<option value="${pList.cateNo}">${pList.cateName}</option>
+				      				</c:forEach>
 				      			</select>
 				      		</td>
 			      		</tr>
