@@ -21,9 +21,6 @@
 			<div id="profilecate_area">
 				<div id="profile">
 					
-					<!-- 기본이미지 -->
-					<!--<img id="proImg" src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg">-->
-					
 					<!-- 사용자업로드 이미지 -->
 					<img id="proImg" src="${pageContext.request.contextPath}/upload/${blogVo.logoFile}">
 					
@@ -34,9 +31,9 @@
 						<strong>카테고리</strong>
 					</div>
 					<ul id="cateList" class="text-left">
-
-						<li><a href="$}">미분류</a></li>
-						
+						<c:forEach items="${categoryVo}" var="cateVo">
+							<li><a href="{pageContext.request.contextPath}/">${cateVo.cateName}</a></li>
+						</c:forEach>
 					</ul>
 				</div>
 			</div>

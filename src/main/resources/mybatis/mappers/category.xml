@@ -63,5 +63,14 @@
 			and cateP = 0
 		]]>
 	</delete>
+	
+	<select id="mainCategory" parameterType="String" resultType="CategoryVo">
+		<![CDATA[
+			select cateNo,id,catename,description,regdate
+			from category
+			where id =#{id}
+			ORDER by regdate desc
+		]]>
+	</select>
 
 </mapper>

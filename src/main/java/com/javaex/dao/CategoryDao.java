@@ -37,4 +37,9 @@ public class CategoryDao {
 		return sqlSession.delete("category.catedelect",cateNo);
 	}
 	
+	public List<CategoryVo> mainCategory(String id) {
+		List<CategoryVo> categoryVo = sqlSession.selectList("category.mainCategory",id);
+		return categoryVo;
+	}
+	
 }

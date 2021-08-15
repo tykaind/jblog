@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.javaex.service.BlogService;
 import com.javaex.service.PostService;
+import com.javaex.vo.BlogVo;
 import com.javaex.vo.PostVo;
 
 @Controller
@@ -17,10 +19,16 @@ public class PostController {
 	
 	@Autowired
 	PostService postService;
+	
+	@Autowired
+	BlogService blogService;
 
 	@RequestMapping("/{id}/admin/writeForm")
 	public String writeForm(@PathVariable("id")String id,Model model) {
 		System.out.println("포스트컨트롤러-포스트폼");
+		
+		BlogVo blogVo = blogService.myblog(id);
+		model.addAttribute("blogVo",blogVo);
 		
 		List<PostVo> postList = postService.writeForm(id);
 		model.addAttribute("postList",postList);

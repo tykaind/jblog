@@ -1,5 +1,7 @@
 package com.javaex.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.BlogService;
 import com.javaex.vo.BlogVo;
+import com.javaex.vo.CategoryVo;
 
 @Controller
 public class BlogController {
@@ -23,7 +26,11 @@ public class BlogController {
 		System.out.println(id);
 		
 		BlogVo blogVo = blogService.myblog(id);
+		List<CategoryVo> categoryVo = blogService.mainCategory(id);
+		
 		model.addAttribute("blogVo", blogVo);
+		model.addAttribute("categoryVo", categoryVo);
+		System.out.println(categoryVo);
 		return "blog/blog-main";
 	}
 	

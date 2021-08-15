@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.BlogDao;
+import com.javaex.dao.CategoryDao;
 import com.javaex.vo.BlogVo;
+import com.javaex.vo.CategoryVo;
 
 @Service
 public class BlogService {
 
 	@Autowired
 	private BlogDao blogDao;
+	
+	@Autowired
+	private CategoryDao categoryDao;
 
 	public BlogVo myblog(String id) {
 		System.out.println("블로그컨트롤러-마이블로그");
@@ -78,5 +84,12 @@ public class BlogService {
 		System.out.println("카테고리서비스-로고재사용");
 		
 		return blogDao.logorecycle(id);
+	}
+	
+	public List<CategoryVo> mainCategory(String id) {
+		System.out.println("서비스메인카테고리");
+		List<CategoryVo> categoryVo = categoryDao.mainCategory(id);
+		
+		return categoryVo;
 	}
 }
